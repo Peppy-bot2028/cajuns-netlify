@@ -1,0 +1,23 @@
+:root{ --pink:#E91E63; --blue:#1E88E5; }
+*{ box-sizing:border-box; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;}
+body{ margin:0; background:#f6f7fb; color:#111;}
+header{ background:linear-gradient(90deg,var(--pink),var(--blue)); color:#fff; padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+h1{ margin:0; font-size:1.1rem; font-weight:700; }
+#sessionStatus{ font-weight:600; }
+main{ max-width:980px; margin:24px auto; padding:0 16px; display:grid; gap:16px; }
+.card{ background:#fff; border-radius:12px; padding:16px; box-shadow:0 6px 20px rgba(0,0,0,.06); }
+.row{ display:flex; gap:8px; flex-wrap:wrap; }
+input, button{ padding:10px 12px; border-radius:10px; border:1px solid #e5e7eb; font-size:14px; }
+input{ flex:1; min-width:160px; }
+button{ background:#111; color:#fff; border:none; cursor:pointer; }
+button.secondary{ background:#f0f2f7; color:#111; }
+button.success{ background:#0ea5e9; }
+button.danger{ background:#ef4444; }
+button:disabled{ opacity:.5; cursor:not-allowed; }
+ul{ list-style:none; padding:0; margin:8px 0 0; }
+li{ padding:10px 8px; border-bottom:1px solid #eee; display:flex; align-items:center; justify-content:space-between; }
+.balance{ font-size:1.1rem; font-weight:700; margin-bottom:10px;}
+.hidden{ display:none; }
+.hint{ color:#555; font-size:.9rem; }
+footer{ max-width:980px; margin:0 auto 40px; padding:0 16px; display:flex; justify-content:flex-end; }
+a#csvLink{ text-decoration:none; font-weight:600; }
