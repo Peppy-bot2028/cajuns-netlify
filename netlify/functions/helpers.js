@@ -21,6 +21,15 @@ export async function saveData(store, families, txns) {
 export function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { "content-type": "application/json" }
+    headers: { "content-type": "application/json", "cache-control": "no-cache" }
   });
+}
+
+// ✅ Missing exports added:
+export function balanceForFamily(txns, familyId){
+  return txns.reduce((c,t)=> t.family_id===familyId ? c + (t.type==='credit'?1:-1)*t.amount_cents : c, 0);
+}
+
+export function nextId(arr){
+  return arr.length ? Math.max(...arr.map(x=>x.id || 0)) + 1 : 1;
 }
