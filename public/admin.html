@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin — Cajuns Concession Stand</title>
+</head>
+<body>
+  <h1>Admin Upload</h1>
+  <p>Enter Admin PIN and upload JSON for families and transactions.</p>
+  <input id="adminPin" type="password" placeholder="Admin PIN (default 2828)"/>
+  <br/><br/>
+  Families JSON: <input id="familiesFile" type="file" accept=".json"/><br/>
+  Transactions JSON: <input id="txnsFile" type="file" accept=".json"/><br/><br/>
+  <button id="uploadBtn">Upload to Server</button>
+  <pre id="result"></pre>
+
+  <script>
+    function readFile(input){
+      return new Promise(resolve=>{
+        const f = input.files[0];
+        if(!f) return resolve(null);
+        const reader = new FileReader();
+        reader.onload = ()=> resolve(reader.result);
+        reader.readAsText(f);
+      });
+    }
+
+    document.getElementById('uploadBtn').addEventListener('click', async ()=>{
+      const admin_pin = document.getElementById('adminPin').value.trim();
+      const famFile = document.getElementById('familiesFile');
+      const txnFile = document.getElementById('txnsFile');
+      const families = await readFile(famFile);
+      const txns = await readFile(txnFile);
+      if(!admin_pin){ alert('Enter Admin PIN.'); return; }
+
+      const payload = { admin_pin, families, txns };
+      const res = await fetch('/.netlify/functions/admin_upload', {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const text = await res.text();
+      document.getElementById('result').textContent = text;
+      if(!res.ok) alert('Upload failed');
+    });
+  </script>
+</body>
+</html>

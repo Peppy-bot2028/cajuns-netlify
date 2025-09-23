@@ -1,0 +1,9 @@
+{
+  "name": "cajuns-concession-stand-netlify",
+  "private": true,
+  "version": "1.1.0",
+  "type": "module",
+  "dependencies": {
+    "@netlify/blobs": "^6.4.0"
+  }
+}
