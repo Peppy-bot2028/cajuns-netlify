@@ -1,0 +1,21 @@
+*{box-sizing:border-box}
+body{font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial; margin:0; background:#f6f7fb; color:#111}
+.wrap{max-width:960px; margin:16px auto; padding:0 12px}
+.center{text-align:center}
+.muted{color:#6b7280}
+.logo{height:64px; float:right}
+.card{background:#fff; padding:16px; border:1px solid #e5e7eb; border-radius:12px; box-shadow:0 1px 2px rgba(0,0,0,.04); margin-bottom:16px}
+.row{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+.grid{display:grid; grid-template-columns: 1fr 1fr; gap:16px}
+@media(max-width:900px){ .grid{grid-template-columns: 1fr;} }
+input,button{padding:10px 12px; border-radius:10px; border:1px solid #e5e7eb; font-size:14px}
+button{background:#111; color:#fff; cursor:pointer}
+button[disabled]{opacity:.5; cursor:not-allowed}
+.list{list-style:none; padding:0; margin:8px 0}
+.list li{display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #eee}
+.balance{font-size:18px; margin:8px 0 16px}
+/* Badges for list balances */
+.badge{ display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px; font-weight:600; border:1px solid #e5e7eb; margin-left:8px; }
+.badge.pos{ background:#ecfdf5; }
+.badge.neg{ background:#fef2f2; }
+.badge.zero{ background:#f3f4f6; }

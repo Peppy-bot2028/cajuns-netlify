@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Class of 2028 Cajuns Concession Stand</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="wrap">
+    <img src="/logo.webp" alt="" class="logo" onerror="this.style.display='none'">
+    <h1>Class of 2028 Cajuns Concession Stand</h1>
+  </header>
+
+  <section class="wrap card">
+    <div class="row">
+      <input id="pinInput" type="password" placeholder="Enter Write PIN">
+      <input id="volNameInput" type="text" placeholder="Cashier name">
+      <button id="unlockBtn">Unlock</button>
+      <span id="sessionStatus" class="muted"></span>
+    </div>
+  </section>
+
+  <section class="wrap grid">
+    <div class="card">
+      <h2>Search Families</h2>
+      <div class="row">
+        <input id="searchInput" type="text" placeholder="Search by family name">
+        <button id="searchBtn">Search</button>
+        <button id="addFamilyBtn" title="Add a new family">+ Add Family</button>
+      </div>
+      <ul id="familyList" class="list"></ul>
+    </div>
+
+    <div class="card" id="familyDetail" style="display:block;">
+      <h2 id="familyName">Select a family</h2>
+      <div class="balance">
+        Balance: <strong id="balance">$0.00</strong>
+      </div>
+      <div class="row">
+        <input id="amountInput" type="number" step="0.01" min="0" placeholder="Amount">
+        <input id="noteInput" type="text" placeholder="Note (e.g., Hot dog + drink)">
+        <button id="creditBtn" disabled>Credit</button>
+        <button id="debitBtn" disabled>Debit</button>
+      </div>
+      <h3>Recent transactions</h3>
+      <ul id="txnList" class="list"></ul>
+    </div>
+  </section>
+
+  <section class="wrap card">
+    <div class="row">
+      <button id="refreshFeedBtn">Refresh Recent Activity (All)</button>
+    </div>
+    <ul id="feedList" class="list"></ul>
+  </section>
+
+  <footer class="wrap center muted">
+    <a href="/admin.html">Admin</a>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
