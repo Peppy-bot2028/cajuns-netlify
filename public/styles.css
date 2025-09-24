@@ -1,5 +1,0 @@
-/* Balance badge for list view */
-.badge{ display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px; font-weight:600; border:1px solid #e5e7eb; margin-left:8px; }
-.badge.pos{ background:#ecfdf5; }   /* light green */
-.badge.neg{ background:#fef2f2; }   /* light red */
-.badge.zero{ background:#f3f4f6; }  /* light gray */
