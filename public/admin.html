@@ -5,20 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin — Cajuns Concession Stand</title>
   <link rel="stylesheet" href="/styles.css">
+  <style>
+    .big { padding:14px 16px; font-size:16px; border-radius:12px; }
+    .row{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+    .card{background:#fff; padding:16px; border:1px solid #e5e7eb; border-radius:14px; box-shadow:0 1px 2px rgba(0,0,0,.04); margin:16px auto; max-width:960px}
+    .wrap{max-width:960px; margin:0 auto; padding:0 14px}
+    .muted{color:#6b7280}
+  </style>
 </head>
 <body>
-  <header class="wrap"><h1>Admin — Cajuns Concession Stand</h1></header>
+  <header class="wrap" style="margin-top:16px">
+    <h1>Admin — Cajuns Concession Stand</h1>
+  </header>
 
-  <section class="wrap card">
+  <section class="card">
     <div class="row">
       <input id="adminPin" type="password" placeholder="Admin PIN (2828)"/>
+      <button id="balancesCsvBig" class="big">⬇️ Download All Balances (CSV)</button>
+      <span class="muted">Opens in Excel/Sheets</span>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Data Tools</h2>
+    <div class="row">
       <button id="dlFamilies">Download families.json</button>
       <button id="dlTxns">Download transactions.json</button>
       <button id="dlBalancesCsv">Download current balances (CSV)</button>
     </div>
   </section>
 
-  <section class="wrap card">
+  <section class="card">
     <h2>Upload / Replace</h2>
     <div class="row">
       <input id="familiesFile" type="file" accept=".json"/>
@@ -46,25 +63,45 @@
       a.download = name;
       a.click();
     }
-    document.getElementById('dlFamilies').addEventListener('click', async ()=>{
+    async function getBalancesCsv(){
+      const res = await fetch('/.netlify/functions/balances?format=csv&_=' + Date.now(), { cache:'no-store' });
+      if(!res.ok){ throw new Error(await res.text()); }
+      return await res.text();
+    }
+
+    async function requirePin(){
       const pin = document.getElementById('adminPin').value.trim();
-      if(!pin){ alert('Enter Admin PIN'); return; }
+      if(!pin){ alert('Enter Admin PIN'); return null; }
+      return pin;
+    }
+
+    document.getElementById('balancesCsvBig').addEventListener('click', async ()=>{
+      const pin = await requirePin(); if(!pin) return;
+      try{
+        const csv = await getBalancesCsv();
+        downloadFile('balances.csv', csv);
+      }catch(e){ alert(e.message || e); }
+    });
+
+    document.getElementById('dlFamilies').addEventListener('click', async ()=>{
+      const pin = await requirePin(); if(!pin) return;
       const res = await fetch('/.netlify/functions/admin_download?key=families&admin_pin='+encodeURIComponent(pin));
       downloadFile('families.json', await res.text());
     });
     document.getElementById('dlTxns').addEventListener('click', async ()=>{
-      const pin = document.getElementById('adminPin').value.trim();
-      if(!pin){ alert('Enter Admin PIN'); return; }
+      const pin = await requirePin(); if(!pin) return;
       const res = await fetch('/.netlify/functions/admin_download?key=txns&admin_pin='+encodeURIComponent(pin));
       downloadFile('transactions.json', await res.text());
     });
     document.getElementById('dlBalancesCsv').addEventListener('click', async ()=>{
-      const res = await fetch('/.netlify/functions/balances?format=csv');
-      downloadFile('balances.csv', await res.text());
+      try{
+        const csv = await getBalancesCsv();
+        downloadFile('balances.csv', csv);
+      }catch(e){ alert(e.message || e); }
     });
+
     document.getElementById('uploadBtn').addEventListener('click', async ()=>{
-      const admin_pin = document.getElementById('adminPin').value.trim();
-      if(!admin_pin){ alert('Enter Admin PIN.'); return; }
+      const admin_pin = await requirePin(); if(!admin_pin) return;
       const families = await readFile(document.getElementById('familiesFile'));
       const txns = await readFile(document.getElementById('txnsFile'));
       if(!families || !txns){ alert('Select both JSON files.'); return; }
@@ -76,8 +113,7 @@
       document.getElementById('result').textContent = await res.text();
     });
     document.getElementById('clearBtn').addEventListener('click', async ()=>{
-      const admin_pin = document.getElementById('adminPin').value.trim();
-      if(!admin_pin){ alert('Enter Admin PIN.'); return; }
+      const admin_pin = await requirePin(); if(!admin_pin) return;
       if(!confirm('Clear both families and transactions?')) return;
       const res = await fetch('/.netlify/functions/admin_upload', {
         method:'POST',
