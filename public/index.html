@@ -7,9 +7,11 @@
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <header class="wrap">
-    <img src="/logo.webp" alt="" class="logo" onerror="this.style.display='none'">
-    <h1>Class of 2028 Cajuns Concession Stand</h1>
+  <header class="banner">
+    <div class="wrap inner">
+      <img src="/logo.webp" alt="" class="logo" onerror="this.style.display='none'">
+      <h1>Class of 2028 Cajuns Concession Stand</h1>
+    </div>
   </header>
 
   <section class="wrap card">
@@ -32,7 +34,7 @@
       <ul id="familyList" class="list"></ul>
     </div>
 
-    <div class="card" id="familyDetail" style="display:block;">
+    <div class="card" id="familyDetail">
       <h2 id="familyName">Select a family</h2>
       <div class="balance">
         Balance: <strong id="balance">$0.00</strong>
@@ -55,7 +57,7 @@
     <ul id="feedList" class="list"></ul>
   </section>
 
-  <footer class="wrap center muted">
+  <footer class="wrap small">
     <a href="/admin.html">Admin</a>
   </footer>
 
