@@ -22,8 +22,7 @@
     <div class="row">
       <input id="adminPin" type="password" placeholder="Admin PIN (2828)"/>
       <button id="balancesCsvBig" class="big">⬇️ Download All Balances (CSV)</button>
-      <button id="txnsCsvBig" class="big">⬇️ Download All Transactions (CSV)</button>
-      <span class="muted">Both open in Excel/Sheets</span>
+      <span class="muted">Opens in Excel/Sheets</span>
     </div>
   </section>
 
@@ -69,16 +68,10 @@
       if(!res.ok){ throw new Error(await res.text()); }
       return await res.text();
     }
-    async function getTransactionsCsv(){
-      const res = await fetch('/.netlify/functions/export?_=' + Date.now(), { cache:'no-store' });
-      if(!res.ok){ throw new Error(await res.text()); }
-      return await res.text();
-    }
 
     async function requirePin(){
       const pin = document.getElementById('adminPin').value.trim();
       if(!pin){ alert('Enter Admin PIN'); return null; }
-      // Note: CSV exports do not require the admin pin on the server, but we keep the UX consistent.
       return pin;
     }
 
@@ -87,14 +80,6 @@
       try{
         const csv = await getBalancesCsv();
         downloadFile('balances.csv', csv);
-      }catch(e){ alert(e.message || e); }
-    });
-
-    document.getElementById('txnsCsvBig').addEventListener('click', async ()=>{
-      const pin = await requirePin(); if(!pin) return;
-      try{
-        const csv = await getTransactionsCsv();
-        downloadFile('transactions.csv', csv);
       }catch(e){ alert(e.message || e); }
     });
 
