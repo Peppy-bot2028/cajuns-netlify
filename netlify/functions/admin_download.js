@@ -5,7 +5,7 @@ export default async (req) => {
   const url = new URL(req.url);
   const key = url.searchParams.get("key");
   const admin_pin = url.searchParams.get("admin_pin");
-  const ADMIN = process.env.ADMIN_PIN || "2828";
+  const ADMIN = process.env.ADMIN_PIN;
   if (admin_pin !== ADMIN) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "content-type":"application/json" }});
   }
