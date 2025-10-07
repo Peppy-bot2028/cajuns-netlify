@@ -6,7 +6,7 @@ export default async (req) => {
     return new Response(JSON.stringify({ error: "Method not allowed" }), { status: 405, headers: { "content-type":"application/json" }});
   }
   const body = await req.json().catch(()=> ({}));
-  const ADMIN = process.env.ADMIN_PIN || "2010";
+  const ADMIN = process.env.ADMIN_PIN;
   if ((body.admin_pin || "").trim() !== ADMIN) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "content-type":"application/json" }});
   }
