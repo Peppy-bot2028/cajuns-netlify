@@ -15,7 +15,7 @@ This build removes Neon/Postgres and provides an Admin Upload page.
 5. Deploy.
 
 ## Usage
-Go to `/admin.html` on your live site.
+Go to `/admin.511.html` on your live site.
 Enter Admin PIN (2828).
 Upload `families.json` and `transactions.json`.
 Click Upload → data is stored in Netlify Blobs.
